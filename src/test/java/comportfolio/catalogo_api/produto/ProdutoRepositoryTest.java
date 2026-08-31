@@ -8,9 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class ProdutoRepositoryTest {
@@ -19,9 +17,10 @@ class ProdutoRepositoryTest {
     private ProdutoRepository repository;
 
     @BeforeEach
-    void limparBanco(){
+    void limparBanco() {
         repository.deleteAll();
     }
+
     @Test
     void deveSalvarEBuscarProdutoPorId() {
         Produto produto = new Produto(
@@ -43,8 +42,9 @@ class ProdutoRepositoryTest {
                 produtoEncontrado.get().getPreco()
         );
     }
-@Test
-    void deveAtualizarProduto(){
+
+    @Test
+    void deveAtualizarProduto() {
         Produto produto = new Produto(
                 "Mouse",
                 "Mouse comum",
@@ -70,10 +70,10 @@ class ProdutoRepositoryTest {
                 new BigDecimal("150.00"),
                 produtoAtualizado.getPreco()
         );
-        assertEquals(8,produtoAtualizado.getEstoque());
-}
+        assertEquals(8, produtoAtualizado.getEstoque());
+    }
 
-@Test
+    @Test
     void deveExcluirProduto() {
         Produto produto = new Produto(
                 "Monitor",
@@ -89,6 +89,6 @@ class ProdutoRepositoryTest {
         boolean produtoAindaExiste = repository.existsById(id);
 
         assertFalse(produtoAindaExiste);
-}
+    }
 }
 
