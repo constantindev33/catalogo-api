@@ -1,5 +1,6 @@
 package comportfolio.catalogo_api;
 
+import comportfolio.catalogo_api.exception.RecursoNaoEncontradoException;
 import comportfolio.catalogo_api.produto.Produto;
 import comportfolio.catalogo_api.produto.ProdutoRepository;
 import comportfolio.catalogo_api.produto.ProdutoRequest;
@@ -9,14 +10,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import comportfolio.catalogo_api.exception.RecursoNaoEncontradoException;
 
-import java.util.Optional;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -32,7 +32,7 @@ class ProdutoServiceTest {
 
     @Test
     void deveCriarProduto() {
-        ProdutoRequest request= new ProdutoRequest(
+        ProdutoRequest request = new ProdutoRequest(
                 "Notebook",
                 "Notebook para estudos",
                 new BigDecimal("3500.00"),
@@ -42,11 +42,11 @@ class ProdutoServiceTest {
         when(produtoRepository.save(any(Produto.class)))
                 .thenAnswer(invocacao -> invocacao.getArgument(0));
 
-                ProdutoResponse resposta = produtoService.criar(request);
+        ProdutoResponse resposta = produtoService.criar(request);
         assertEquals("Notebook", resposta.nome());
         assertEquals("Notebook para estudos", resposta.descricao());
-        assertEquals(new BigDecimal("3500.00"),resposta.preco());
-        assertEquals(4,resposta.estoque());
+        assertEquals(new BigDecimal("3500.00"), resposta.preco());
+        assertEquals(4, resposta.estoque());
 
         verify(produtoRepository).save(any(Produto.class));
     }
@@ -68,7 +68,7 @@ class ProdutoServiceTest {
 
         assertEquals("Monitor", resposta.nome());
         assertEquals("Monitor de 24 polegadas", resposta.descricao());
-        assertEquals(3,resposta.estoque());
+        assertEquals(3, resposta.estoque());
 
         verify(produtoRepository).findById(1L);
     }
@@ -141,7 +141,7 @@ class ProdutoServiceTest {
         assertEquals("Mouse Gamer", resposta.nome());
         assertEquals("Mouse com iluminação RGB", resposta.descricao());
         assertEquals(new BigDecimal("150.00"), resposta.preco());
-        assertEquals(8,resposta.estoque());
+        assertEquals(8, resposta.estoque());
 
         verify(produtoRepository).findById(1L);
         verify(produtoRepository).save(produtoExistente);
@@ -150,10 +150,10 @@ class ProdutoServiceTest {
     @Test
     void deveExcluirProduto() {
         Produto produto = new Produto(
-              "Monitor",
-              "Monitor de 24 polegadas",
-              new BigDecimal("899.90"),
-              3
+                "Monitor",
+                "Monitor de 24 polegadas",
+                new BigDecimal("899.90"),
+                3
         );
 
         when(produtoRepository.findById(1L))

@@ -11,8 +11,8 @@ public record ProdutoResponse(
         Integer estoque
 ) {
 
-    public static ProdutoResponse from(Produto produto){
-        return  new ProdutoResponse(
+    public static ProdutoResponse from(Produto produto) {
+        return new ProdutoResponse(
                 produto.getId(),
                 produto.getNome(),
                 produto.getDescricao(),
